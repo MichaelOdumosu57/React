@@ -1,0 +1,106 @@
+18003474934
+
+8664780032
+
+600+ 240
+600 +
+
+
+https://reactjs.org/
+learning react.js
+
+setup https://reactjs.org/docs/try-react.html
+
+
+                                                /////////////////////////
+                                                //  Create React app   //
+                                                /////////////////////////
+
+
+latest js features, nice developer experience optimizes app production
+
+npm install -g create-react-app
+create-react-app my-app
+
+cd my-app
+npm start
+
+no node modules or promises, just lying around in my computer, refer back here to learn how to use
+create-react-app
+
+https://reactjs.org/docs/add-react-to-an-existing-app.html#installing-react
+
+
+    npm init
+    npm install --save react react-dom
+
+                            Enabling ES6 and JSX
+
+We recommend using React with Babel to let you use ES6 and JSX in your JavaScript code. ES6 is a set of modern JavaScript features that make development easier, and JSX is an extension to the JavaScript language that works nicely with React.
+
+
+so install babel with babel-preset-react and babel-preset-env and enable them in your .babelrc configuration, and you’re good to go.
+
+
+https://babeljs.io/docs/setup/
+
+
+Choose your tool (try CLI)
+
+https://www.hipstercode.com/tutorial/29/
+
+
+    react is a javascipt library
+    react uses webpaack a module bundler that makes things easier to deal with
+    uses jsx (a mix of js and html) and ecmascript2015, (modern version of js)
+    however some browsers do not support this, babel is a complier that converts it to raw js
+
+to hard to install so I'll use the big external file instead
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+https://reactjs.org/docs/hello-world.html
+
+                            ----------starting with react.js--------
+
+    ReactDOM.render(
+      <h1>Hello, world!</h1>,
+      document.getElementById('root')
+    );
+
+    react programs go in a js file
+
+
+                                -------Introducing JSX-----------
+
+    const element = <h1>Hello, world!</h1>;
+    
+is known as jsx
+
+react doesn't need jsx but its helpful when you need to find errors
+
+
+        --Embedding Expressions in JSX--
+
+to embed js in jsx use curly braces
+
+    { [js] }
+
+also use parentheses around these braces to avoid semicolon insertions
+
+
+you can use JSX for conditionals functions and so on
