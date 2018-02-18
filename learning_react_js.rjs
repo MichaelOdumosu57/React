@@ -104,3 +104,79 @@ also use parentheses around these braces to avoid semicolon insertions
 
 
 you can use JSX for conditionals functions and so on
+You may use quotes to specify string literals as attributes:
+
+    const element = <div tabIndex="0"></div>;
+
+You may also use curly braces to embed a JavaScript expression in an attribute:
+
+    const element = <img src={user.avatarUrl}></img>;
+
+do not use both curly braces and quotes
+
+empty tags
+
+    const element = <img src={user.avatarUrl} />;
+
+jsx tags can have children
+
+
+
+            ------------------JSX Prevents Injection Attacks------------
+
+to prevent
+
+    const title = response.potentiallyMaliciousInput;
+    // This is safe:
+    const element = <h1>{title}</h1>;
+
+By default, React DOM escapes any values embedded in JSX before rendering them. Thus it ensures that you can never inject anything that’s not explicitly written in your application.
+
+
+
+                --------------JSX Represents Objects-------------
+
+Babel compiles JSX down to React.createElement() calls.
+
+    const element = (
+      <h1 className="greeting">
+        Hello, world!
+      </h1>
+    );
+    
+    ==
+    
+    const element = React.createElement(
+      'h1',
+      {className: 'greeting'},
+      'Hello, world!'
+    );
+
+
+the method checks for bugs
+
+
+                    -----------------Rendering Elements------------------
+
+elements are the smallest building blocks of reacts
+
+we call this a “root” DOM node because everything inside it will be managed by React DOM.
+
+        <div id="root"></div>
+
+Applications built with just React usually have a single root DOM node. If you are integrating React into an existing app, you can have several isolated "root" DOM
+
+To render a React element into a root DOM node, pass both to ReactDOM.render():
+
+    const element = <h1>Hello, world</h1>;
+    ReactDOM.render(element, document.getElementById('root'));
+
+
+reactDOM elements are immutable the only way to change it is to create a new element and pass it to reactDOM to repalce
+
+however, react knows what to replace and does not tear down the whole element
+
+
+
+
+                ----------------------Components and Props---------------------z
