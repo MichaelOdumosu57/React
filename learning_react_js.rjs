@@ -88,7 +88,7 @@ https://reactjs.org/docs/hello-world.html
                                 -------Introducing JSX-----------
 
     const element = <h1>Hello, world!</h1>;
-    
+
 is known as jsx
 
 react doesn't need jsx but its helpful when you need to find errors
@@ -143,9 +143,9 @@ Babel compiles JSX down to React.createElement() calls.
         Hello, world!
       </h1>
     );
-    
+
     ==
-    
+
     const element = React.createElement(
       'h1',
       {className: 'greeting'},
@@ -207,11 +207,11 @@ When React sees an element representing a user-defined component, it passes JSX 
 
 always use capital letters for components
 
-    
+
     function Welcome(props) {
       return <h1>Hello, {props.name}</h1>;
     }
-    
+
     const element = <Welcome name="Sara" />;
     ReactDOM.render(
       element,
@@ -227,7 +227,7 @@ can make a component that is connected to other componets, so when have choices 
     function Welcome(props) {
       return <h1>Hello, {props.name}</h1>;
     }
-    
+
     function App() {
       return (
         <div>
@@ -237,7 +237,7 @@ can make a component that is connected to other componets, so when have choices 
         </div>
       );
     }
-    
+
     welcome compoent in app component
     ReactDOM.render(
       <App />,
@@ -280,7 +280,7 @@ First, we will extract Avatar:
           src={props.user.avatarUrl}
           alt={props.user.name}
         />
-    
+
       );
     }
 
@@ -334,13 +334,13 @@ then add a state to the clock component
 to convert a component to a class
 
         Create an ES6 class, with the same name, that extends React.Component.
-        
+
         Add a single empty method to it called render().
-        
+
         Move the body of the function into the render() method.
-        
+
         Replace props with this.props in the render() body.
-        
+
         Delete the remaining empty function declaration.
 
 
@@ -361,14 +361,14 @@ from
             </div>
           );
         }
-        
+
         function tick() {
           ReactDOM.render(
             <Clock date={new Date()} />,
             document.getElementById('root')
           );
         }
-        
+
         setInterval(tick, 1000);
 
 
@@ -383,7 +383,7 @@ to
             super(props);
             this.state = {date: new Date()};
           }
-        
+
           render() {
             return (
               <div>
@@ -393,7 +393,7 @@ to
             );
           }
         }
-        
+
         ReactDOM.render(
           <Clock />,
           document.getElementById('root')
@@ -419,16 +419,16 @@ lifecycle hooks= methods to take care of this
     //good to setup timers here
 
     //While this.props is set up by React itself and this.state has a special meaning, you are free to add additional fields to the class manually if you need to store something that is not used for the visual output.
-    
+
     //If you don’t use something in render(), it shouldn’t be in the state.
-    
-    
+
+
 when we remove the item we use this
 
       componentWillUnmount() {
         clearInterval(this.timerID);
       }
-        
+
 componentDidMount() and componentWillUnmount() react know about these, and makes these calls to hooks so you dont have to figure out when a component is rendered in the DOM or not
 
 final code ---=-=-=-=-=--=--=---=-=-=-=-=--=--=---=-=-=-=-=--=--=---=-=-=-=-=--=--=---=-=-=-=-=--=--=
@@ -511,7 +511,7 @@ to update, everything is affected on at at time
             posts: response.posts
           });
         });
-    
+
         fetchComments().then(response => {
           this.setState({
             comments: response.comments
@@ -544,7 +544,7 @@ to cancel a default event
             e.preventDefault();
             console.log('The link was clicked.');
           }
-        
+
           return (
             <a href="#" onClick={handleClick}>
               Click me
@@ -559,17 +559,17 @@ to toggle, its really a focus on how actions are binded to events
           constructor(props) {
             super(props);
             this.state = {isToggleOn: true};
-        
+
             // This binding is necessary to make `this` work in the callback
             this.handleClick = this.handleClick.bind(this);
           }
-        
+
           handleClick() {
             this.setState(prevState => ({
               isToggleOn: !prevState.isToggleOn
             }));
           }
-        
+
           render() {
             return (
               <button onClick={this.handleClick}>
@@ -578,7 +578,7 @@ to toggle, its really a focus on how actions are binded to events
             );
           }
         }
-        
+
         ReactDOM.render(
           <Toggle />,
           document.getElementById('root')
@@ -612,25 +612,25 @@ you can do this by using stateful component here known as Login Control
             this.handleLogoutClick = this.handleLogoutClick.bind(this);
             this.state = {isLoggedIn: false};
           }
-        
+
           handleLoginClick() {
             this.setState({isLoggedIn: true});
           }
-        
+
           handleLogoutClick() {
             this.setState({isLoggedIn: false});
           }
-        
+
           render() {
             const isLoggedIn = this.state.isLoggedIn;
-        
+
             let button = null;
             if (isLoggedIn) {
               button = <LogoutButton onClick={this.handleLogoutClick} />;
             } else {
               button = <LoginButton onClick={this.handleLoginClick} />;
             }
-        
+
             return (
               <div>
                 <Greeting isLoggedIn={isLoggedIn} />
@@ -639,7 +639,7 @@ you can do this by using stateful component here known as Login Control
             );
           }
         }
-        
+
         ReactDOM.render(
           <LoginControl />,
           document.getElementById('root')
@@ -665,12 +665,162 @@ you can do this by using stateful component here known as Login Control
         -------------
           );
         }
-        
+
         const messages = ['React', 'Re: React', 'Re:Re: React'];
         ReactDOM.render(
           <Mailbox unreadMessages={messages} />,
           document.getElementById('root')
         );
 
+            -------------------------lists and keys--------------------------
 
 
+In React, transforming arrays into lists of elements is nearly identical.
+
+
+--------------------Rendering Multiple Components-----------------
+
+
+    to use JSX, map function on  arrays
+
+        const numbers = [1, 2, 3, 4, 5];
+        const listItems = numbers.map((number) =>
+          <li>{number}</li>
+        );
+
+    ReactDOM.render(
+      <ul>{listItems}</ul>,
+      document.getElementById('root')
+    );
+
+
+or
+
+
+
+    function NumberList(props) {
+      const numbers = props.numbers;
+      const listItems = numbers.map((number) =>
+        <li key={number.toString()}>
+          {number}
+          </li>
+      );
+      return (
+        <ul>{listItems}</ul>
+      );
+    }
+
+    const numbers = [1, 2, 3, 4, 5];
+    ReactDOM.render(
+      <NumberList numbers={numbers} />,
+      document.getElementById('root')
+    );
+
+// you always need keys with list components
+
+
+
+
+
+
+----------------Keys------------
+they are what help react identify changes in elements so they can be stable
+choose one that can uniqely identify each elements, like id's or its index, but index only if the order cannot changes
+
+
+
+
+function ListItem(props) {
+  // Correct! There is no need to specify the key here:
+  return <li>{props.value}</li>;
+}
+
+function NumberList(props) {
+  const numbers = props.numbers;
+  const listItems = numbers.map((number) =>
+    // Correct! Key should be specified inside the array.
+    <ListItem key={number.toString()}
+              value={number} />
+  );
+  return (
+    <ul>
+      {listItems}
+    </ul>
+  );
+}
+
+const numbers = [1, 2, 3, 4, 5];
+ReactDOM.render(
+  <NumberList numbers={numbers} />,
+  document.getElementById('root')
+);
+
+
+//keys do not need to be globally unique only to the list it belongs # TODO:
+
+
+      function Blog(props) {
+        const sidebar = (
+          <ul>
+            {props.posts.map((post) =>
+              <li key={post.id}>
+                {post.title}
+              </li>
+            )}
+          </ul>
+        );
+        const content = props.posts.map((post) =>
+          <div key={post.id}>
+            <h3>{post.title}</h3>
+            <p>{post.content}</p>
+          </div>
+        );
+        return (
+          <div>
+            {sidebar}
+            <hr />
+            {content}
+          </div>
+        );
+      }
+
+      const posts = [
+        {id: 1, title: 'Hello World', content: 'Welcome to learning React!'},
+        {id: 2, title: 'Installation', content: 'You can install React from npm.'}
+      ];
+      ReactDOM.render(
+        <Blog posts={posts} />,
+        document.getElementById('root')
+      );
+
+
+keys dont get passed to componets u must do it yrself
+
+
+
+const content = posts.map((post) =>
+  <Post
+    key={post.id}
+    id={post.id}
+    title={post.title} />
+);
+
+
+//we could include the map method in our JSX embed
+
+
+
+
+        function NumberList(props) {
+          const numbers = props.numbers;
+          return (
+            <ul>
+              {numbers.map((number) =>
+                <ListItem key={number.toString()}
+                          value={number} />
+              )}
+            </ul>
+          );
+        }
+
+if you do too much nesting, you should try to extract a component
