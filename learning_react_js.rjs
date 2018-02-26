@@ -719,8 +719,45 @@ always specify the keys in the compoent that is holding the lists, not the compo
 that is making the list items, there is no need for the key to be otherwise
 
 
+            ---------Keys Must Only Be Unique Among Siblings--------------
+we can use the same keys when we produce 2 different arrays
+
+If you need the same value in your component, pass it explicitly as a prop with a different name:
+file: children_same_key.js
+
+
+            --------embed map in JSX --------------
+
+to embed the mapping function in jsx
+
+function NumberList(props) {
+  const numbers = props.numbers;
+  return (
+    <ul>
+    -=-=-=-=-=-=-=-=-=-=-=--=-=--=-=-=-=-=-=-=-=-=-=-=-=--=
+      {numbers.map((number) =>
+        <ListItem key={number.toString()}
+                  value={number} />
+      )}
+      -=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-==-=-==-=--=-=
+    </ul>
+  );
+}
+
+
+
 
 ------------------------Forms---------------------
+
+in html when a user submits a form they go to a new page
+to do this in react you need a controlled component
+  this compment handles form submission and has access to its data
+
+
+                            --------------------Controlled Components---------------]
+file: controlled_component.js
+
+in react mutable state is in the state property updated by setState()
 
 HTML form elements naturally keep their internal state
 
@@ -728,9 +765,9 @@ if you want this in react, it there for you but you can use controlled compoents
 bascially they handle form submission and data about the form
 
 In React, mutable state is typically kept in the state property of components, and only updated with setState()
-
-
 this updates with each key stroke so you can make sure the user is typing the right thing
+
+hence the single soruce of truth is in the state propertys
 
 +++++++++++++++++++++++++
         class NameForm extends React.Component {
@@ -774,8 +811,9 @@ so if you wanted to enforce all uppercase
 
 
     -----------------The textarea Tag-----------------
-
+file:textarea.js
 if you want to put default text in a textarea tag with react
+
 
 +++++++++++++++==
     class EssayForm extends React.Component {
@@ -812,7 +850,11 @@ if you want to put default text in a textarea tag with react
 }
 ----------------------------
 
-
+                              -----------------The select Tag-----------------
+file:select_dropdown.js
+here what is going on is that the state is initalized to one of the choice not the first like HTML
+then the values are associated to this.state.value, so react knows how to replace the current selection
+the new ones
 react dropdowns
 
 +++++++++++++++++++++++++
@@ -913,17 +955,16 @@ used ES6 computed property name to get the job done
     this.setState({
       [name]: value
     });
+'Also, since setState() automatically merges a partial state into the current state, you can do this'
 
-
+'not necessaily what is happening, see es6 has the power to hold attributes in the state variable of an es6
+class and when a change is made it is sent to this dynamic process known as this.setState where the attribute is
+  changed according to the updated value'
 --------control input value ------
-
+file: wait.js
 if you to control the time to wait before a user inputs you can do
 
-        ReactDOM.render(<input value="hi" />, mountNode);
 
-        setTimeout(function() {
-          ReactDOM.render(<input value={null} />, mountNode);
-        }, 1000);
 
         --------------------Lifting State Up----------------------------
 
