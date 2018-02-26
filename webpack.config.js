@@ -3,7 +3,7 @@ var path = require('path');
 // var webpack = require('webpack');
 
 module.exports = {
-    entry:'./giving_a_component_state.js',
+    entry:'./script.js',
     output:{
         path: path.resolve(__dirname,''),
         filename: 'transpiled.js'
