@@ -17,11 +17,12 @@ class Wait extends React.Component {
 
   render() {
     return (
-      <input value={this.props.value}  onChange = {  this.handleChange }/>
+      <textarea value={this.props.value}  onChange = {  this.handleChange }/>
     );
   }
 }
-
+// here when react sees a different element being called to render, it completly replaces that element,
+// you might have to save it with child nodes
 ReactDOM.render(
   <input />,
   document.getElementById('root')

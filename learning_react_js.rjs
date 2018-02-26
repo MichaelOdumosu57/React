@@ -969,6 +969,8 @@ if you to control the time to wait before a user inputs you can do
         --------------------Lifting State Up----------------------------
 
 when you want several components to reflect the same changing data here is what you do
+file: static_value_change.js  
+file: dynamic_value_change.js
 
 
 
@@ -1161,6 +1163,11 @@ function BoilingVerdict(props) {
   return <p>The water would not boil.</p>;
 }
 
+
+
+what happens is instead of the children compoent making changes, the value and the change
+insturction is received from the parents, which means the state was lifted up so in the children
+this.state properties go to this.prop and setState() is not used instead its this.props.[variable_handler]
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
