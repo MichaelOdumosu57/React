@@ -66,6 +66,9 @@ function GoodbyeDialog() {
   );
 }
 
+// this is composition becasue here the Goodbye dialog is like a chraracterstics, the Dialog compoent is like a template
+// but the charactersitcs uses the template to render the object and not the other way
+
 
 
 ReactDOM.render(

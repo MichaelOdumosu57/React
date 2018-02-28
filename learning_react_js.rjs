@@ -969,7 +969,7 @@ if you to control the time to wait before a user inputs you can do
         --------------------Lifting State Up----------------------------
 
 when you want several components to reflect the same changing data here is what you do
-file: static_value_change.js  
+file: static_value_change.js
 file: dynamic_value_change.js
 
 
@@ -1174,9 +1174,11 @@ this.state properties go to this.prop and setState() is not used instead its thi
 
 --------------------------Composition vs Inheritance----------------------------
 
+  its best to use composition, instead of inheritance  to reuse code between  components
         ------------------Containment---------------
+        file: jsx_meant_for_children.js
+components  do not know about children, use the props.children to pass those elements directly to the parent
 
-components  do not know about chirldren, use the props.children to pass those elements directly to the parent
 
 
         function FancyBorder(props) {
@@ -1205,7 +1207,10 @@ components  do not know about chirldren, use the props.children to pass those el
           );
         }
 
-if you have different type of info to be passed as different children, you don't need to call them children then
+if you have different type of info to be passed as different children, you don't need to call them children then you
+  can specialize your own prop
+  file ': jsx_children_names.js'
+  the example is obviously using plenty more code, to render the split pane
 
         function SplitPane(props) {
           return (
@@ -1238,8 +1243,8 @@ if you have different type of info to be passed as different children, you don't
 
 
         -----------Specialization-----------
-
-Sometimes we have special components. what they do is fill in the data left default by their more general counterparts
+composition
+Where the specific version fills the general template with its own identity, like customizing a partial
 
         function Dialog(props) {
           return (
@@ -1256,13 +1261,13 @@ Sometimes we have special components. what they do is fill in the data left defa
           );
         }
 
-        function WelcomeDialog() {
+        function GoodbyeDialog() {
           return (
             <Dialog
-            ------------------------------------------
-              title="Welcome"
-              message="Thank you for visiting our spacecraft!" />
-            ------------------------------------------
+            --------------------
+              title="Goodbye"
+              message="hope to see  you soon!" />
+              =---------------------
           );
         }
 
@@ -1320,6 +1325,7 @@ works the same for component classes
 
         -----So What About Inheritance?-So What About Inheritance?-------
 
+Highly useful, looks like the people at React do not understand what they made
 If you want to reuse non-UI functionality between components, we suggest extracting it into a separate JavaScript module. The components may import it and use that function, object, or a class, without extending it.
 
 
