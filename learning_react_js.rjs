@@ -710,7 +710,10 @@ file:basic_key_component.js
                             ----keys------
 Keys help React identify which items have changed, are added, or are removed.
 keys should be unique, and should be named according to something stable in order to avoid
-production issues, the keys for every item should not change
+production issues, the keys for every item should not change. use index like This
+
+[array].map((item,index) =>
+  <[component] key = {index}/>
 
 
                            ------Extracting Components with Keys------------

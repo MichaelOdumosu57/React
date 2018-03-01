@@ -48,22 +48,29 @@ class Item extends React.Component{
         return this.state.color;
       }
 
+      label(sides){
+        () => this.setState({color})
+      }
+
 
   render(){
-    
-    if(this.props.price != undefined){
-    return(
-      <div color = {this.label_red()}>
-        <h6>{this.props.name}</h6>
-        <h6>{this.props.price}</h6>
-      </div>
-    )
+    const info =  [this.props.name,this.props.price]
+    const item_description = info.map((category,index) =>
+      <h6 key = {index}>
+        {category}
+      </h6>
+    );
+    let edges = null;
+    if(this.props.price == undefined){
+      return (<div color = {this.state.color}>{item_description}</div>);
     }
-    return(
-        <div color = {this.label_cyan()}>
-          <h6>{this.props.name}</h6>
-        </div>
-    )
+    else{
+      return ( <div color = {this.state.color}>{item_description}</div>);
+    }
+
+
+
+
 
 
 
