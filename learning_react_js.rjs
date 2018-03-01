@@ -1357,3 +1357,9 @@ FilterableProductTable
 
 
                 -------build a stantic version in react-----------
+
+
+
+notes
+when not using lifecycle hooks, you can use the arrow function if you need anything called inside an ES6 cLASS
+adjacent jsx must be wrapped in closing tags

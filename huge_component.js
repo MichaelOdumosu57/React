@@ -13,7 +13,7 @@ function Comment(props) {
           className="Avatar"
           src={props.author.avatarUrl}
           alt={props.author.name}
-        hu
+        />
         <div className="UserInfo-name">
           {props.author.name}
         </div>
