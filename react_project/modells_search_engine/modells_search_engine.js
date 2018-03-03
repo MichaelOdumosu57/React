@@ -121,7 +121,8 @@ class PriceBoard extends React.Component {
     super(props);
     this.state = {
       text_query: '',
-      checked: true
+      checked: true,
+      first: true
     }
 
     this.handleTextChange = this.handleTextChange.bind(this);
@@ -131,15 +132,20 @@ class PriceBoard extends React.Component {
 
   handleTextChange(name){
     this.setState({
-      text_query: name
+      text_query: name,
+      first:false
     })
   }
 
   handleCheckChange(hit){
     this.setState({
-      checked: hit
+      checked: hit,
+      first:false
     })
   }
+
+
+
 
 
   render(){
@@ -148,14 +154,14 @@ class PriceBoard extends React.Component {
     let lastCategory = null;
 
 
-
      PRODUCTS.forEach((product) => {
        if (product.name.indexOf(this.state.text_query) === -1) {
          return;
        }
-       if (this.state.checked && !product.stocked) {
+       if (this.state.checked && !product.stocked &&  !this.state.first) {
          return;
        }
+
        if (product.category !== lastCategory) {
          rows.push(
            <ProductCategoryRow
