@@ -13,6 +13,14 @@ const PRODUCTS = [
 ];
 
 
+function JustContainer(props){
+  return(
+    <div color = "yellow">
+      {props.children}
+    </div>
+  )
+}
+
 
 
 class SearchBar extends React.Component{
@@ -39,6 +47,7 @@ class SearchBar extends React.Component{
 
 
     return (
+      <JustContainer>
       <div>
         <input type="text" placeholder={this.props.greeter}  onChange = {this.handleTextChange} value ={this.props.text_query} />
         <p>
@@ -48,6 +57,8 @@ class SearchBar extends React.Component{
         </p>
 
       </div>
+      {this.props.children}
+      </JustContainer>
 
     );
   }
@@ -150,7 +161,7 @@ class PriceBoard extends React.Component {
 
   render(){
 
-    var rows = [];
+    const rows = [];
     let lastCategory = null;
 
 
@@ -183,15 +194,14 @@ class PriceBoard extends React.Component {
 
 
 
-    <div>
-      <div color = "green">
+
       <SearchBar
         textChange = {this.state.text_query}
         hit = {this.state.checked}
         onTextChange = {this.handleTextChange}
         onHit = {this.handleCheckChange }
         greeter="Search..."
-        message="Only Show Products In Stock" />
+        message="Only Show Products In Stock" >
         <table>
           <thead>
             <tr>
@@ -201,10 +211,9 @@ class PriceBoard extends React.Component {
           </thead>
           <tbody>{rows}</tbody>
         </table>
+      </SearchBar>
 
 
-      </div>
-    </div>
     );
   }s
 }
