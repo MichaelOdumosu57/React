@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 18003474934
 
 8664780032
@@ -56,6 +57,66 @@ https://www.hipstercode.com/tutorial/29/
     however some browsers do not support this, babel is a complier that converts it to raw js
 
 to hard to install so I'll use the big external file instead
+=======
+  18003474934
+
+  8664780032
+
+  600+ 240
+  600 +
+
+
+  https://reactjs.org/
+  learning react.js
+
+  setup https://www.youtube.com/watch?v=z-vLtsKvp_4
+
+
+                                                  /////////////////////////
+                                                  //  Create React app   //
+                                                  /////////////////////////
+
+
+  latest js features, nice developer experience optimizes app production
+
+  npm install -g create-react-app
+  create-react-app my-app
+
+  cd my-app
+  npm start
+
+  no node modules or promises, just lying around in my computer, refer back here to learn how to use
+  create-react-app
+
+  https://reactjs.org/docs/add-react-to-an-existing-app.html#installing-react
+
+
+      npm init
+      npm install --save react react-dom
+
+                              Enabling ES6 and JSX
+
+  We recommend using React with Babel to let you use ES6 and JSX in your JavaScript code. ES6 is a set of modern JavaScript features that make development easier, and JSX is an extension to the JavaScript language that works nicely with React.
+
+
+  so install babel with babel-preset-react and babel-preset-env and enable them in your .babelrc configuration, and you’re good to go.
+
+
+  https://babeljs.io/docs/setup/
+
+
+  Choose your tool (try CLI)
+
+  https://www.hipstercode.com/tutorial/29/
+
+
+      react is a javascipt library
+      react uses webpaack a module bundler that makes things easier to deal with
+      uses jsx (a mix of js and html) and ecmascript2015, (modern version of js)
+      however some browsers do not support this, babel is a complier that converts it to raw js
+
+  to hard to install so I'll use the big external file instead
+>>>>>>> projects
 
 
 
@@ -73,6 +134,7 @@ to hard to install so I'll use the big external file instead
 
 
 
+<<<<<<< HEAD
 https://reactjs.org/docs/hello-world.html
 
                             ----------starting with react.js--------
@@ -177,10 +239,117 @@ To render a React element into a root DOM node, pass both to ReactDOM.render():
 reactDOM elements are immutable the only way to change it is to create a new element and pass it to reactDOM to repalce
 
 however, react knows what to replace and does not tear down the whole element
+=======
+  https://reactjs.org/docs/hello-world.html
+
+                              ----------starting with react.js--------
+                              file: hello_world.js
+      ReactDOM.render(
+        <h1>Hello, world!</h1>,
+        document.getElementById('root')
+      );
+
+      react programs go in a js file
+
+
+                                  -------Introducing JSX-----------
+
+      const element = <h1>Hello, world!</h1>;
+
+  is known as jsx
+
+  react doesn't need jsx but its helpful when you need to find errors
+
+
+          --Embedding Expressions in JSX--
+
+  file: first_jsx.js
+  to embed js in jsx use curly braces
+
+      { [js] }
+
+  also use parentheses around these braces to avoid semicolon insertions
+
+
+  you can use JSX for conditionals functions and so on
+  You may use quotes to specify string literals as attributes:
+
+      const element = <div tabIndex="0"></div>;
+
+  You may also use curly braces to embed a JavaScript expression in an attribute:
+
+      const element = <img src={user.avatarUrl}></img>;
+
+  do not use both curly braces and quotes
+
+  empty tags
+
+      const element = <img src={user.avatarUrl} />;
+
+  jsx tags can have children
+
+
+
+              ------------------JSX Prevents Injection Attacks------------
+
+  to prevent
+
+      const title = response.potentiallyMaliciousInput;
+      // This is safe:
+      const element = <h1>{title}</h1>;
+
+  By default, React DOM escapes any values embedded in JSX before rendering them. Thus it ensures that you can never inject anything that’s not explicitly written in your application.
+
+
+
+                  --------------JSX Represents Objects-------------
+
+  Babel compiles JSX down to React.createElement() calls.
+
+      const element = (
+        <h1 className="greeting">
+          Hello, world!
+        </h1>
+      );
+
+      ==
+
+      const element = React.createElement(
+        'h1',
+        {className: 'greeting'},
+        'Hello, world!'
+      );
+
+
+  the method checks for bugs
+
+
+                      -----------------Rendering Elements------------------
+                      file: ticking_clock_i.js
+
+  elements are the smallest building blocks of reacts
+
+  we call this a “root” DOM node because everything inside it will be managed by React DOM.
+
+          <div id="root"></div>
+
+  Applications built with just React usually have a single root DOM node. If you are integrating React into an existing app, you can have several isolated "root" DOM
+
+  To render a React element into a root DOM node, pass both to ReactDOM.render():
+
+      const element = <h1>Hello, world</h1>;
+      ReactDOM.render(element, document.getElementById('root'));
+
+
+  reactDOM elements are immutable the only way to change it is to create a new element and pass it to reactDOM to repalce
+
+  however, react knows what to replace and does not tear down the whole element
+>>>>>>> projects
 
 
 
 
+<<<<<<< HEAD
                 ----------------------Components and Props---------------------
 
 
@@ -560,6 +729,443 @@ to assign a function to an event
     </button>
 
 to cancel a default event
+=======
+                  ----------------------Components and Props---------------------
+
+
+  Components let you split the UI into independent, reusable pieces, and think about each piece in isolation.
+
+  like functions, accpet input [props] and output react elements describing the visual objects
+
+
+
+                  --------------------Functional and Class Components----------------
+
+  simplest way to write a js component is to make a function
+
+  can also use an ES6 class
+
+      class Welcome extends React.Component {
+        render() {
+          return <h1>Hello, {this.props.name}</h1>;
+        }
+      }
+
+
+                  ------------------Rendering a Component ------------------------
+                  file: first_component.js
+  When React sees an element representing a user-defined component, it passes JSX attributes to this component as a single object. We call this object “props”.
+
+  always use capital letters for components
+
+
+      function Welcome(props) {
+        return <h1>Hello, {props.name}</h1>;
+      }
+
+      const element = <Welcome name="Sara" />;
+      ReactDOM.render(
+        element,
+        document.getElementById('root')
+      );
+
+
+
+                  ----------------Composing Components-----------------------
+                  file: first_component.js
+  can make a component that is connected to other componets, so when have choices of creating a compoment or a component object
+
+      function Welcome(props) {
+        return <h1>Hello, {props.name}</h1>;
+      }
+
+      function App() {
+        return (
+          <div>
+            <Welcome name="Sara" />
+            <Welcome name="Cahal" />
+            <Welcome name="Edite" />
+          </div>
+        );
+      }
+
+      welcome compoent in app component
+      ReactDOM.render(
+        <App />,
+        document.getElementById('root')
+      );
+
+
+
+              -----------------------Extracting Components-----------------
+              file: huge_component.js
+  you can split components into smaller ones
+
+          function Comment(props) {
+            return (
+              <div className="Comment">
+                <div className="UserInfo">
+                  <img className="Avatar"
+                    src={props.author.avatarUrl}
+                    alt={props.author.name}
+                  />
+                  <div className="UserInfo-name">
+                    {props.author.name}
+                  </div>
+                </div>
+                <div className="Comment-text">
+                  {props.text}
+                </div>
+                <div className="Comment-date">
+                  {formatDate(props.date)}
+                </div>
+              </div>
+            );
+          }
+
+  First, we will extract Avatar:
+
+      function Avatar(props) {
+        return (
+          <img className="Avatar"
+            src={props.user.avatarUrl}
+            alt={props.user.name}
+          />
+
+        );
+      }
+
+  We recommend naming props from the component’s own point of view rather than the context in which it is being used.
+
+  then extract UserInfo
+
+          function UserInfo(props) {
+            return (
+              <div className="UserInfo">
+                <Avatar user={props.user} />
+                <div className="UserInfo-name">
+                  {props.user.name}
+                </div>
+              </div>
+            );
+          }
+
+  final work
+
+      function Comment(props) {
+        return (
+          <div className="Comment">
+            <UserInfo user={props.author} />
+            <div className="Comment-text">
+              {props.text}
+            </div>
+            <div className="Comment-date">
+              {formatDate(props.date)}
+            </div>
+          </div>
+        );
+      }
+
+      file extracting_components.js
+      what he meant up there is that when the author object is passed to the UserInfo Componet as a prop, instead of calling it
+      props.author like give it props.user. If you do props.author what happens is that the component simply does not the
+        name of the prop is sees any incoming prop object as user so that is how you must use it
+
+
+
+                  -------------------------Props are Read-Only-------------------------
+
+      a component must never change its props
+
+                  ----------------------State and Lifecycle--------------------------
+                  file: giving_a_component_state.js
+  we wil l make a clock component that can set up its own timer and update itself every second.
+
+  We can start by encapsulating how the clock looks:
+
+  then add a state to the clock component
+
+
+                      -----------------Converting a Function to a Class---------------
+
+  to convert a component to a class
+
+          Create an ES6 class, with the same name, that extends React.Component.
+
+          Add a single empty method to it called render().
+
+          Move the body of the function into the render() method.
+
+          Replace props with this.props in the render() body.
+
+          Delete the remaining empty function declaration.
+
+
+      ----------------------adding local state to a class-------------------
+
+
+      Replace this.props.date with this.state.date in the render() method:
+      Add a class constructor that assigns the initial this.state:
+      Note how we pass props to the base constructor:
+
+  from
+
+          function Clock(props) {
+            return (
+              <div>
+                <h1>Hello, world!</h1>
+                <h2>It is {props.date.toLocaleTimeString()}.</h2>
+              </div>
+            );
+          }
+
+          function tick() {
+            ReactDOM.render(
+              <Clock date={new Date()} />,
+              document.getElementById('root')
+            );
+          }
+
+          setInterval(tick, 1000);
+
+
+
+
+
+
+
+  to
+          class Clock extends React.Component {
+            constructor(props) {
+              super(props);
+              this.state = {date: new Date()};
+            }
+
+            render() {
+              return (
+                <div>
+                  <h1>Hello, world!</h1>
+                  <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
+                </div>
+              );
+            }
+          }
+
+          ReactDOM.render(
+            <Clock />,
+            document.getElementById('root')
+          );
+
+              -------------------Adding Lifecycle Methods to a Class------------------
+              file: giving_a_component_state.js
+  in applications with many components we want to free up space when the DOM  is destroyed
+
+  MOUNTING -when we render a component to the DOM.
+
+  UNMOUNTING - when we want to clear the timer
+
+  lifecycle hooks= methods to take care of this
+
+        componentDidMount() {
+          this.timerID = setInterval(
+            () => this.tick(),
+            1000
+          );
+        }
+
+      //good to setup timers here
+
+      //While this.props is set up by React itself and this.state has a special meaning, you are free to add additional fields to the class manually if you need to store something that is not used for the visual output.
+
+      //If you don’t use something in render(), it shouldn’t be in the state.
+
+
+  when we remove the item we use this
+
+        componentWillUnmount() {
+          clearInterval(this.timerID);
+        }
+
+  componentDidMount() and componentWillUnmount() react know about these, and makes these calls to hooks so you dont have to figure out when a component is rendered in the DOM or not
+
+  final code ---=-=-=-=-=--=--=---=-=-=-=-=--=--=---=-=-=-=-=--=--=---=-=-=-=-=--=--=---=-=-=-=-=--=--=
+
+  class Clock extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {date: new Date()};
+    }
+
+    componentDidMount() {
+      this.timerID = setInterval(
+        () => this.tick(),
+        1000
+      );
+    }
+
+    componentWillUnmount() {
+      clearInterval(this.timerID);
+    }
+
+    tick() {
+      this.setState({
+        date: new Date()
+      });
+    }
+
+    render() {
+      return (
+        <div>
+          <h1>Hello, world!</h1>
+          <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
+        </div>
+      );
+    }
+  }
+
+  ReactDOM.render(
+    <Clock />,
+    document.getElementById('root')
+  );
+
+
+
+
+
+
+
+  ---=-=-=-=-=--=--=---=-=-=-=-=--=--=---=-=-=-=-=--=--=---=-=-=-=-=--=--=---=-=-=-=-=--=--=
+
+
+              -----------------Using State Correctly-------------------
+
+  to re-render a component
+
+          this.setState({comment: 'Hello'});
+
+  to calculate the next state use a prevState, becuase everything is updated in async
+
+          this.setState((prevState, props) => ({
+            counter: prevState.counter + props.increment
+          }));
+
+
+  When you call setState(), React merges the object you provide into the current state.
+
+        constructor(props) {
+          super(props);
+          this.state = {
+            posts: [],
+            comments: []
+          };
+        }
+
+  to update, everything is affected on at at time
+
+        componentDidMount() {
+          fetchPosts().then(response => {
+            this.setState({
+              posts: response.posts
+            });
+          });
+
+          fetchComments().then(response => {
+            this.setState({
+              comments: response.comments
+            });
+          });
+        }
+
+
+
+              ------------------The Data Flows Down-----------------------
+
+  a state is local, or encapsulated because its only for the component that owns or sets it
+  a component can choose to pass its state down as props to its children
+
+      <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
+
+
+      this is alloweded
+  <FormattedDate date={this.state.date} />
+
+
+
+  basically its saying a state can be used by its children, but the child doesn't know about it so you have to implement something
+
+
+
+  function FormattedDate(props) {
+    return <h2>It is {props.date.toLocaleTimeString()}.</h2>;
+  }
+
+  but this is repetivive, so you dont need to do this
+
+              --------------------Handling Events------------------
+  to assign a function to an event
+
+      <button onClick={activateLasers}>
+        Activate Lasers
+      </button>
+
+  to cancel a default event
+
+          function ActionLink() {
+            function handleClick(e) {
+              e.preventDefault();
+              console.log('The link was clicked.');
+            }
+
+            return (
+              <a href="#" onClick={handleClick}>
+                Click me
+              </a>
+            );
+          }
+
+  to toggle, its really a focus on how actions are binded to events
+
+
+          class Toggle extends React.Component {
+            constructor(props) {
+              super(props);
+              this.state = {isToggleOn: true};
+
+              // This binding is necessary to make `this` work in the callback
+              this.handleClick = this.handleClick.bind(this);
+            }
+
+            handleClick() {
+              this.setState(prevState => ({
+                isToggleOn: !prevState.isToggleOn
+              }));
+            }
+
+            render() {
+              return (
+                <button onClick={this.handleClick}>
+                  {this.state.isToggleOn ? 'ON' : 'OFF'}
+                </button>
+              );
+            }
+          }
+
+          ReactDOM.render(
+            <Toggle />,
+            document.getElementById('root')
+          );
+
+  '
+              -------------Passing Arguments to Event Handlers----------------
+              file: toggle_event.js
+  in react to handle an event
+
+      <button onClick={activateLasers}>
+        Activate Lasers
+      </button>
+
+  to prevent default behavior
+>>>>>>> projects
 
         function ActionLink() {
           function handleClick(e) {
@@ -574,6 +1180,7 @@ to cancel a default event
           );
         }
 
+<<<<<<< HEAD
 to toggle, its really a focus on how actions are binded to events
 
 
@@ -657,10 +1264,129 @@ same as js if, else
 storing elements in variables can help you dynamic enable conditional parts of your website, without changing everything else
 
 you can do this by using stateful component here known as Login Control
+=======
+  the e parameter is a synthetic event
 
 
 
 
+  inside a loop this is what to do
+
+  end
+
+  <button onClick={this.deleteRow.bind(this, id)}>Delete Row</button>
+
+
+  its better to use the protoptype bind where you need it
+
+
+
+              --------------------Conditional Rendering------------------
+              is_logged_in.js
+
+  same as js if, else
+
+
+          -----------Element Variables---------
+          file: login_control.js
+  storing elements in variables can help you dynamic enable conditional parts of your website, without changing everything else
+
+  you can do this by using stateful component here known as Login Control
+
+
+
+
+      -------------shorten conditionals---------
+
+      -------use if with && operator if you want to conditionally include an element ------
+          file: mailbox_test.js
+          function Mailbox(props) {
+            const unreadMessages = props.unreadMessages;
+            return (
+          ----------
+              <div>
+                <h1>Hello!</h1>
+                {unreadMessages.length > 0 &&
+                  <h2>
+                    You have {unreadMessages.length} unread messages.
+                  </h2>
+                }
+              </div>
+          -------------
+            );
+          }
+
+          const messages = ['React', 'Re: React', 'Re:Re: React'];
+          ReactDOM.render(
+            <Mailbox unreadMessages={messages} />,
+            document.getElementById('root')
+          );
+
+          -----------------Preventing Component from Rendering-----------------------
+
+          file: warning.js
+
+          if you want to learn how to do it look at the file included
+
+
+
+
+  -------------------------Lists and keys--------------------------
+
+                                  --------Rendering multiple components -----------
+  if you want to render multiple components use the File
+  file: basic_list_rendering.js
+
+
+                                  -----------Basic List Component-------------
+  to render lists inside components you will need keys
+  file:basic_key_component.js
+
+                              ----keys------
+  Keys help React identify which items have changed, are added, or are removed.
+  keys should be unique, and should be named according to something stable in order to avoid
+  production issues, the keys for every item should not change. use index like This
+
+  [array].map((item,index) =>
+    <[component] key = {index}/>
+
+
+                             ------Extracting Components with Keys------------
+  file: keys_inside_components.js
+  always specify the keys in the compoent that is holding the lists, not the compoent
+  that is making the list items, there is no need for the key to be otherwise
+
+
+              ---------Keys Must Only Be Unique Among Siblings--------------
+  we can use the same keys when we produce 2 different arrays
+
+  If you need the same value in your component, pass it explicitly as a prop with a different name:
+  file: children_same_key.js
+
+
+              --------embed map in JSX --------------
+
+  to embed the mapping function in jsx
+
+  function NumberList(props) {
+    const numbers = props.numbers;
+    return (
+      <ul>
+      -=-=-=-=-=-=-=-=-=-=-=--=-=--=-=-=-=-=-=-=-=-=-=-=-=--=
+        {numbers.map((number) =>
+          <ListItem key={number.toString()}
+                    value={number} />
+        )}
+        -=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-==-=-==-=--=-=
+      </ul>
+    );
+  }
+>>>>>>> projects
+
+
+
+
+<<<<<<< HEAD
     -------------shorten conditionals---------
 
     -------use if with && operator if you want to conditionally include an element ------
@@ -1352,8 +2078,923 @@ FilterableProductTable
     ProductTable
         ProductCategoryRow
         ProductRow
+=======
+  ------------------------Forms---------------------
+
+  in html when a user submits a form they go to a new page
+  to do this in react you need a controlled component
+    this compment handles form submission and has access to its data
+
+
+                              --------------------Controlled Components---------------]
+  file: controlled_component.js
+
+  in react mutable state is in the state property updated by setState()
+
+  HTML form elements naturally keep their internal state
+
+  if you want this in react, it there for you but you can use controlled compoents
+  bascially they handle form submission and data about the form
+
+  In React, mutable state is typically kept in the state property of components, and only updated with setState()
+  this updates with each key stroke so you can make sure the user is typing the right thing
+
+  hence the single soruce of truth is in the state propertys
+
+  +++++++++++++++++++++++++
+          class NameForm extends React.Component {
+            constructor(props) {
+              super(props);
+              this.state = {value: ''};
+
+              this.handleChange = this.handleChange.bind(this);
+              this.handleSubmit = this.handleSubmit.bind(this);
+            }
+
+            handleChange(event) {
+              this.setState({value: event.target.value});
+            }
+
+            handleSubmit(event) {
+              alert('A name was submitted: ' + this.state.value);
+              event.preventDefault();
+            }
+
+            render() {
+              return (
+                <form onSubmit={this.handleSubmit}>
+                  <label>
+                    Name:
+                    <input type="text" value={this.state.value} onChange={this.handleChange} />
+                  </label>
+                  <input type="submit" value="Submit" />
+                </form>
+              );
+            }
+          }
+  ++++++++++
+
+  so if you wanted to enforce all uppercase
+
+          handleChange(event) {
+            this.setState({value: event.target.value.toUpperCase()});
+          }
+
+
+
+      -----------------The textarea Tag-----------------
+  file:textarea.js
+  if you want to put default text in a textarea tag with react
+
+
+  +++++++++++++++==
+      class EssayForm extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            value: 'Please write an essay about your favorite DOM element.'
+          };
+
+          this.handleChange = this.handleChange.bind(this);
+          this.handleSubmit = this.handleSubmit.bind(this);
+        }
+
+        handleChange(event) {
+          this.setState({value: event.target.value});
+        }
+
+        handleSubmit(event) {
+          alert('An essay was submitted: ' + this.state.value);
+          event.preventDefault();
+        }
+
+        render() {
+          return (
+            <form onSubmit={this.handleSubmit}>
+              <label>
+                Essay:
+                <textarea value={this.state.value} onChange={this.handleChange} />
+              </label>
+              <input type="submit" value="Submit" />
+            </form>
+          );
+        }
+  }
+  ----------------------------
+
+                                -----------------The select Tag-----------------
+  file:select_dropdown.js
+  here what is going on is that the state is initalized to one of the choice not the first like HTML
+  then the values are associated to this.state.value, so react knows how to replace the current selection
+  the new ones
+  react dropdowns
+
+  +++++++++++++++++++++++++
+  class FlavorForm extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {value: 'coconut'};
+
+      this.handleChange = this.handleChange.bind(this);
+      this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleChange(event) {
+      this.setState({value: event.target.value});
+    }
+
+    handleSubmit(event) {
+      alert('Your favorite flavor is: ' + this.state.value);
+      event.preventDefault();
+    }
+
+    render() {
+      return (
+        <form onSubmit={this.handleSubmit}>
+          <label>
+            Pick your favorite La Croix flavor:
+            <select value={this.state.value} onChange={this.handleChange}>
+              <option value="grapefruit">Grapefruit</option>
+              <option value="lime">Lime</option>
+              <option value="coconut">Coconut</option>
+              <option value="mango">Mango</option>
+            </select>
+          </label>
+          <input type="submit" value="Submit" />
+        </form>
+      );
+    }
+  }
+  +++++++++++++++++++=
+
+  if you want to select multiple options do this
+
+      <select multiple={true} value={['B', 'C']}>
+
+
+  if you are handling multiple inputs at a time
+
+  ----------------------
+          class Reservation extends React.Component {
+            constructor(props) {
+              super(props);
+              this.state = {
+                isGoing: true,
+                numberOfGuests: 2
+              };
+
+              this.handleInputChange = this.handleInputChange.bind(this);
+            }
+
+            handleInputChange(event) {
+              const target = event.target;
+              const value = target.type === 'checkbox' ? target.checked : target.value;
+              const name = target.name;
+
+              this.setState({
+                [name]: value
+              });
+            }
+
+            render() {
+              return (
+                <form>
+                  <label>
+                    Is going:
+                    <input
+                      name="isGoing"
+                      type="checkbox"
+                      checked={this.state.isGoing}
+                      onChange={this.handleInputChange} />
+                  </label>
+                  <br />
+                  <label>
+                    Number of guests:
+                    <input
+                      name="numberOfGuests"
+                      type="number"
+                      value={this.state.numberOfGuests}
+                      onChange={this.handleInputChange} />
+                  </label>
+                </form>
+              );
+            }
+          }
+  =======================================
+
+  used ES6 computed property name to get the job done
+
+      this.setState({
+        [name]: value
+      });
+  'Also, since setState() automatically merges a partial state into the current state, you can do this'
+
+  'not necessaily what is happening, see es6 has the power to hold attributes in the state variable of an es6
+  class and when a change is made it is sent to this dynamic process known as this.setState where the attribute is
+    changed according to the updated value'
+  --------control input value ------
+  file: wait.js
+  if you to control the time to wait before a user inputs you can do
+
+
+
+          --------------------Lifting State Up----------------------------
+
+  when you want several components to reflect the same changing data here is what you do
+  file: static_value_change.js
+  file: dynamic_value_change.js
+
+
+
+  +++++++++++++++++++++++++++++++++++++++++++++++
+          function BoilingVerdict(props) {
+            if (props.celsius >= 100) {
+              return <p>The water would boil.</p>;
+            }
+            return <p>The water would not boil.</p>;
+          }
+
+          class Calculator extends React.Component {
+            constructor(props) {
+              super(props);
+              this.handleChange = this.handleChange.bind(this);
+              this.state = {temperature: ''};
+            }
+
+            handleChange(e) {
+              this.setState({temperature: e.target.value});
+            }
+
+            render() {
+              const temperature = this.state.temperature;
+              return (
+                <fieldset>
+                  <legend>Enter temperature in Celsius:</legend>
+                  <input
+                    value={temperature}
+                    onChange={this.handleChange} />
+
+                  <BoilingVerdict
+                    celsius={parseFloat(temperature)} />
+
+                </fieldset>
+              );
+            }
+          }
+
+  +++++++++++++++++++++++++++++++++++++++++++++
+
+
+  to add a second input
+
+  [[[[[[[[[[[[[[[[[[[[[
+          const scaleNames = {
+            c: 'Celsius',
+            f: 'Fahrenheit'
+          };
+
+          class TemperatureInput extends React.Component {
+            constructor(props) {
+              super(props);
+              this.handleChange = this.handleChange.bind(this);
+              this.state = {temperature: ''};
+            }
+
+            handleChange(e) {
+              this.setState({temperature: e.target.value});
+            }
+
+            render() {
+              const temperature = this.state.temperature;
+              const scale = this.props.scale;
+              return (
+                <fieldset>
+                  <legend>Enter temperature in {scaleNames[scale]}:</legend>
+                  <input value={temperature}
+                         onChange={this.handleChange} />
+                </fieldset>
+              );
+            }
+          }
+
+
+  //to render it in the calculator
+
+      class Calculator extends React.Component {
+        render() {
+          return (
+            <div>
+              <TemperatureInput scale="c" />
+              <TemperatureInput scale="f" />
+            </div>
+          );
+        }
+      }
+  [[[[[[[[[[[[[[[[[[[[[[[[
 
 
 
 
+  ---------------------Writing Conversion Functions-------------------------
+
+          function toCelsius(fahrenheit) {
+            return (fahrenheit - 32) * 5 / 9;
+          }
+
+          function toFahrenheit(celsius) {
+            return (celsius * 9 / 5) + 32;
+          }
+
+  // conversion checks
+
+          function tryConvert(temperature, convert) {
+            const input = parseFloat(temperature);
+            if (Number.isNaN(input)) {
+              return '';
+            }
+            const output = convert(input);
+            const rounded = Math.round(output * 1000) / 1000;
+            return rounded.toString();
+          }
+
+              --------------------Lifting State Up----------------------------
+
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  to make sure that any change in one input reflects changes in both
+
+          class Calculator extends React.Component {
+            constructor(props) {
+              super(props);
+              this.handleCelsiusChange = this.handleCelsiusChange.bind(this);
+              this.handleFahrenheitChange = this.handleFahrenheitChange.bind(this);
+              this.state = {temperature: '', scale: 'c'};
+            }
+
+            handleCelsiusChange(temperature) {
+              this.setState({scale: 'c', temperature});
+            }
+
+            handleFahrenheitChange(temperature) {
+              this.setState({scale: 'f', temperature});
+            }
+
+            render() {
+              const scale = this.state.scale;
+              const temperature = this.state.temperature;
+              const celsius = scale === 'f' ? tryConvert(temperature, toCelsius) : temperature;
+              const fahrenheit = scale === 'c' ? tryConvert(temperature, toFahrenheit) : temperature;
+
+              return (
+                <div>
+                  <TemperatureInput
+                    scale="c"
+                    temperature={celsius}
+                    onTemperatureChange={this.handleCelsiusChange} />
+
+                  <TemperatureInput
+                    scale="f"
+                    temperature={fahrenheit}
+                    onTemperatureChange={this.handleFahrenheitChange} />
+
+                  <BoilingVerdict
+                    celsius={parseFloat(celsius)} />
+
+                </div>
+              );
+            }
+          }
+
+          class TemperatureInput extends React.Component {
+            constructor(props) {
+              super(props);
+              this.handleChange = this.handleChange.bind(this);
+            }
+
+            handleChange(e) {
+              this.props.onTemperatureChange(e.target.value);
+            }
+
+            render() {
+              const temperature = this.props.temperature;
+              const scale = this.props.scale;
+              return (
+                <fieldset>
+                  <legend>Enter temperature in {scaleNames[scale]}:</legend>
+                  <input value={temperature}
+                         onChange={this.handleChange} />
+                </fieldset>
+              );
+            }
+          }
+
+
+  function BoilingVerdict(props) {
+    if (props.celsius >= 100) {
+      return <p>The water would boil.</p>;
+    }
+    return <p>The water would not boil.</p>;
+  }
+
+
+
+  what happens is instead of the children compoent making changes, the value and the change
+  insturction is received from the parents, which means the state was lifted up so in the children
+  this.state properties go to this.prop and setState() is not used instead its this.props.[variable_handler]
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+  --------------------------Composition vs Inheritance----------------------------
+
+    its best to use composition, instead of inheritance  to reuse code between  components
+          ------------------Containment---------------
+          file: jsx_meant_for_children.js
+  components  do not know about children, use the props.children to pass those elements directly to the parent
+
+
+
+          function FancyBorder(props) {
+            return (
+              <div className={'FancyBorder FancyBorder-' + props.color}>
+                {props.children}
+              </div>
+            );
+          }
+
+
+  //allows other components to pass arbitrary children to them
+
+          function WelcomeDialog() {
+            return (
+              <FancyBorder color="blue">
+              -------------------------------------------------
+                <h1 className="Dialog-title">
+                  Welcome
+                </h1>
+                <p className="Dialog-message">
+                  Thank you for visiting our spacecraft!
+                </p>
+              --------------------------------------------------------
+              </FancyBorder>
+            );
+          }
+
+  if you have different type of info to be passed as different children, you don't need to call them children then you
+    can specialize your own prop
+    file ': jsx_children_names.js'
+    the example is obviously using plenty more code, to render the split pane
+
+          function SplitPane(props) {
+            return (
+              <div className="SplitPane">
+              ------------------------------------------
+                <div className="SplitPane-left">
+                  {props.left}
+                </div>
+                <div className="SplitPane-right">
+                  {props.right}
+                </div>
+              ------------------------------------------
+              </div>
+            );
+          }
+
+          function App() {
+            return (
+              <SplitPane
+              ------------------------------------------
+                left={
+                  <Contacts />
+                }
+                right={
+                  <Chat />
+              ------------------------------------------
+                } />
+            );
+          }
+
+
+          -----------Specialization-----------
+  composition
+  Where the specific version fills the general template with its own identity, like customizing a partial
+
+          function Dialog(props) {
+            return (
+              <FancyBorder color="blue">
+              ------------------------------------------
+                <h1 className="Dialog-title">
+                  {props.title}
+                </h1>
+                <p className="Dialog-message">
+                  {props.message}
+                </p>
+              ------------------------------------------
+              </FancyBorder>
+            );
+          }
+
+          function GoodbyeDialog() {
+            return (
+              <Dialog
+              --------------------
+                title="Goodbye"
+                message="hope to see  you soon!" />
+                =---------------------
+            );
+          }
+
+  works the same for component classes
+
+  ------------------------------------------------
+
+          function Dialog(props) {
+            return (
+              <FancyBorder color="blue">
+                <h1 className="Dialog-title">
+                  {props.title}
+                </h1>
+                <p className="Dialog-message">
+                  {props.message}
+                </p>
+                {props.children}
+              </FancyBorder>
+            );
+          }
+
+          class SignUpDialog extends React.Component {
+            constructor(props) {
+              super(props);
+              this.handleChange = this.handleChange.bind(this);
+              this.handleSignUp = this.handleSignUp.bind(this);
+              this.state = {login: ''};
+            }
+
+            render() {
+              return (
+                <Dialog title="Mars Exploration Program"
+                        message="How should we refer to you?">
+                  <input value={this.state.login}
+                         onChange={this.handleChange} />
+
+                  <button onClick={this.handleSignUp}>
+                    Sign Me Up!
+                  </button>
+                </Dialog>
+              );
+            }
+
+            handleChange(e) {
+              this.setState({login: e.target.value});
+            }
+
+            handleSignUp() {
+              alert(`Welcome aboard, ${this.state.login}!`);
+            }
+          }
+
+  ------------------------------------------------
+
+
+          -----So What About Inheritance?-So What About Inheritance?-------
+
+  Highly useful, looks like the people at React do not understand what they made
+  If you want to reuse non-UI functionality between components, we suggest extracting it into a separate JavaScript module. The components may import it and use that function, object, or a class, without extending it.
+
+
+          ------------Thinking in React---- Thinking in React-------------
+
+      ------- searchable product data table using React.--------
+
+   1. ----------Break The UI Into A Component Hierarchy--------
+
+  a component should always be doing one thing
+  if your model was built good, the json data will fit nicely
+
+  You’ll see here that we have five components in our simple app. We’ve italicized the data each component represents.
+
+  FilterableProductTable (orange): contains the entirety of the example
+  SearchBar (blue): receives all user input
+  ProductTable (green): displays and filters the data collection based on user input
+  ProductCategoryRow (turquoise): displays a heading for each category
+  ProductRow (red): displays a row for each product
+
+  then make a hierchy
+  FilterableProductTable
+      SearchBar
+      ProductTable
+          ProductCategoryRow
+          ProductRow
+
+
+
+
+                  -------build a stantic version in react-----------
+                  file:sporting_goods.js
+
+
+  '
+  -------------------------------JSX in Depth-------------------------------
+
+  cool JSX React translations
+
+  ===================================================
+
+  <MyButton color="blue" shadowSize={2}>
+    Click Me
+  </MyButton>
+  +++++++++++++++++++++++
+
+  React.createElement(
+    MyButton,
+    {color: 'blue', shadowSize: 2},
+    'Click Me'
+  )
+
+  ==================================================
+
+  <div className="sidebar" />
+
+  ++++++++++++++++
+
+  React.createElement(
+    'div',
+    {className: 'sidebar'},
+    null
+  )
+
+  =================================================
+
+React Must Be in Scope
+you can have external compoenents sent to your file like This
+
+import React from 'react';
+import CustomButton from './CustomButton';
+
+function WarningButton() {
+  // return React.createElement(CustomButton, {color: 'red'}, null);
+  return <CustomButton color="red" />;
+}
+
+Using Dot Notation for JSX Type
+if you want to associate React components to save confusion
+  file: jsx_namespace.js
+  ================================================================
+
+import React from 'react';
+
+const MyComponents = {
+  DatePicker: function DatePicker(props) {
+    return <div>Imagine a {props.color} datepicker here.</div>;
+  }
+}
+
+function BlueDatePicker() {
+  return <MyComponents.DatePicker color="blue" />;
+}
+
+==========================================================
+
+
+User-Defined Components Must Be Capitalized always remember
+
+
+Choosing the Type at Runtime
+=============================================
+
+
+import React from 'react';
+import { PhotoStory, VideoStory } from './stories';
+
+const components = {
+  photo: PhotoStory,
+  video: VideoStory
+};
+
+function Story(props) {
+  // Wrong! JSX type can't be an expression.
+  return <components[props.storyType] story={props.story} />;
+}
+
++++++++++++++++++++++++++++++++++++++++++++'
+
+import React from 'react';
+import { PhotoStory, VideoStory } from './stories';
+
+const components = {
+  photo: PhotoStory,
+  video: VideoStory
+};
+
+function Story(props) {
+  // Correct! JSX type can be a capitalized variable.
+  const SpecificStory = components[props.storyType];
+  return <SpecificStory story={props.story} />;
+}
+
+=====================================================
+
+Props in JSX
+====================
+
+
+        JavaScript Expressions as Props
+        ==============================
+
+        <MyComponent foo={1 + 2 + 3 + 4} />
+
+        ======================================
+
+        if you need a conditional
+
+          function NumberDescriber(props) {
+            let description;
+            if (props.number % 2 == 0) {
+              description = <strong>even</strong>;
+            } else {
+              description = <i>odd</i>;
+            }
+            return <div>{props.number} is an {description} number</div>;
+          }
+
+      ================================================
+
+
+        String Literals
+        ==============================
+        <MyComponent message="hello world" />
+        same
+        <MyComponent message={'hello world'} />
+        ==============================
+
+        When you pass a string literal, its value is HTML-unescaped
+        ================================================================
+        <MyComponent message="&lt;3" />
+        same
+        <MyComponent message={'<3'} />
+
+Props Default to “True”
+==================================
+<MyTextBox autocomplete />
+
+<MyTextBox autocomplete={true} />
+==================================
+{do not use}
+
+
+
+Spread Attributes
+if you have plenty of code you want to pass as a prop you can do this
+=================================
+function App1() {
+  return <Greeting firstName="Ben" lastName="Hector" />;
+}
+
+function App1() {
+  const props = {firstName: 'Ben', lastName: 'Hector'};
+  return <Greeting {...props} />;
+}
+=================================
+
+if you want to specify what receives the prop Spread
+  also a differnt way to write components
+  also you can pass props.children through here using  ...other
+  ============================
+  file:select_spread.js
+  const Button = props => {
+    const  kind = props, other  = props;
+    const className = kind === "primary" ? "PrimaryButton" : "SecondaryButton";
+    return <button className={className} {...other} />;
+  };
+
+  const App = () => {
+    return (
+      <div>
+        <Button kind="primary" onClick={() => console.log("clicked!")}>
+          Hello World!
+        </Button>
+      </div>
+    );
+  };
+================================
+{do not use too much}
+
+Children in JSX
+================================
+several ways to pass props.children
+
+        String Literals
+        ===========================
+        <MyComponent>Hello world!</MyComponent>
+        ===========================
+
+        JSX Children
+        ============================
+      <MyContainer>
+        <MyFirstComponent />
+        <MySecondComponent />
+      </MyContainer>
+        ============================
+
+        you can mix different children
+
+        <div>
+          Here is a list:
+          <ul>
+            <li>Item 1</li>
+            <li>Item 2</li>
+          </ul>
+        </div>
+        ============================
+
+      render() {
+        // No need to wrap list items in an extra element!
+        return [
+          // Do not forget the keys :)
+          <li key="A">First item</li>,
+          <li key="B">Second item</li>,
+          <li key="C">Third item</li>,
+        ];
+      }
+
+
+      ==========================
+      JavaScript Expressions as Children
+
+      <MyComponent>foo</MyComponent>
+
+      <MyComponent>{'foo'}</MyComponent
+      ================================
+              Functions as children
+               if you have a custom component, you could have it take a callback as props.children:
+                =============================================================
+                callback_props_children.js
+                // Calls the children callback numTimes to produce a repeated component
+                function Repeat(props) {
+                  let items = [];
+                  for (let i = 0; i < props.numTimes; i++) {
+                    items.push(props.children(i));
+                  }
+                  return <div>{items}</div>;
+                }
+
+                function ListOfTenThings() {
+                  return (
+                    <Repeat numTimes={10}>
+                      {(index) => <div key={index}>This is item {index} in the list</div>}
+                    </Repeat>
+                  );
+                }
+
+
+
+
+      Booleans, Null, and Undefined Are Ignored
+      in your conditionals make sure they are comparison or they might evaluate incorrectly
+      ========================================
+      file ;displaying_false_values.js
+      <div>
+        {props.messages.length > 0 &&
+          <MessageList messages={props.messages} />
+        }
+      </div>
+      ===========================================
+
+      if you want a value like false, true, null, or undefined to appear in the output, you have to convert it to a string first:
+      <div>
+        My JavaScript variable is {String(myVariable)}.
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> projects
+
+
+
+
+<<<<<<< HEAD
                 -------build a stantic version in react-----------
+=======
+  notes
+  when not using lifecycle hooks, you can use the arrow function if you need anything called inside an ES6 cLASS
+  adjacent jsx must be wrapped in closing tags
+>>>>>>> projects
