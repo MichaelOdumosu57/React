@@ -3123,10 +3123,37 @@ if you have react 15.5 or later this React.PropTypes feature is remote
         );
 
         =================================
-        
 
 
 
+-----------------------------Static Type Checking-------------------------
+---------------------------------------------------------------------------
+
+Static type checkers like Flow and TypeScript identify certain types of problems before you even run your code.
+
+
+
+Flow
+
+Flow is a static type checker for your JavaScript code. It is developed at Facebook and is often used with React.
+
+https://flow.org/en/docs/getting-started/
+
+    Adding Flow to a Project
+
+
+    npm install --save-dev flow-bin
+
+    then add this to scripts section in package.json
+    ===================================================
+    "scripts": {
+      "flow": "flow",
+      // ...
+    },
+    =====================================================
+
+    npm run flow init
+    CONFIGURE the config file made out of it
 
 
 
