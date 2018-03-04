@@ -4,10 +4,9 @@ var path = require('path');
 
 module.exports = {
     entry:'./script.js',
-<<<<<<< HEAD
-=======
+
     // entry:'./modells_search_engine.js',
->>>>>>> projects
+
     output:{
         path: path.resolve(__dirname,''),
         filename: 'transpiled.js'
