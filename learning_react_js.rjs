@@ -3156,8 +3156,117 @@ https://flow.org/en/docs/getting-started/
     CONFIGURE the config file made out of it
 
 
+    Stripping Flow Syntax from the Compiled Code
+    flow extends javascript but the browser does not know this
+    to make sure flow is used is based on how you are complining jsx and es6
+
+    if you are using create react app, it is already doing it
+
+    I USED BABEL to do it
+    ===================================
+    sudo npm install --save-dev babel-preset-flow
+
+    add this to your webpack.config.js file
+    in rules in query
+    presets:['env','react','flow']
 
 
+    If you don’t use either Create React App or Babel, you can use flow-remove-types to strip the type annotations.
+
+
+
+    Running Flow
+
+    npm run flow
+    Spawned flow server (pid=11449)
+    Logs will go to /tmp/flow/zShomezSautosparkzSMy_ComputerzSReact_js.log
+    Monitor logs will go to /tmp/flow/zShomezSautosparkzSMy_ComputerzSReact_js.monitor_log
+
+
+
+    Adding Flow Type Annotations
+    FLOW only checks files with
+
+    // @flow
+    run npm run flow and see what happens
+
+    CODING IN Flow
+    https://flow.org/en/docs/types/
+    ./Flow/learning_flow.fl
+
+
+TypeScript
+TypeScript is a programming language developed by Microsoft. It is a typed superset of JavaScript, and includes its own compiler. Being a typed language, Typescript can catch errors and bugs at build time, long before your app goes live.
+
+
+  Adding TypeScript to a Project
+  sudo npm install --save-dev typescript
+
+add this to scripts in package.json
+
+  "scripts": {
+    "build": "tsc --init",
+
+run npm run build
+  Configuring the TypeScript Compiler
+  we tell the compiler what to do by the tsconfig.json file
+    run to gemerate
+    sudo npm run build
+
+    if you open the .json config you see many options
+
+      arrange project like this
+
+      ├── package.json
+      ├── Typescript
+      │   └── index.ts
+      └── tsconfig.json
+
+      tell the complier where the source and output folders are
+      "compilerOptions": {
+        // ...
+        "rootDir": "./Typescript",
+        "outDir": "./Typescript/build"
+        // ...
+      },
+
+Generally, you don’t want to keep the generated javascript in your source control, so be sure to add the build folder to your .gitignore.
+
+
+File extensions
+.ts is the default file extension while .tsx is a special extension used for files which contain JSX.
+
+Running TypeScript
+take out the '--init' from the build in scripts and Run
+sudo npm run build
+If you see no output, it means that it completed successfully.
+
+To be able to show errors and hints from other packages, the compiler relies on declaration files. A declaration file provides all the type information about a library. This enables us to use javascript libraries like those on npm in our project.
+There are two main ways to get declarations for a library:
+
+Bundled - The library bundles it’s own declaration file.
+This is great for us, since all we need to do is install the library, and we can use it right away.
+  To check if a library has bundled types, look for an index.d.ts file in the project.
+   Some libraries will have it specified in their package.json under the typings or types field.
+
+
+DefinitelyTyped - DefinitelyTyped is a huge repository of declarations for libraries that don’t bundle a declaration file.
+The declarations are crowd-sourced and managed by Microsoft and open source contributors.
+React for example doesn’t bundle it’s own declaration file.
+Instead we can get it from DefinitelyTyped. To do so enter this command in your terminal.
+
+  # npm
+  npm i --save-dev @types/react
+
+Local Declarations Sometimes the package that you want to use doesn’t bundle declarations nor is it available on DefinitelyTyped.
+In that case, we can have a local declaration file.
+To do this, create a declarations.d.ts file in the root of your source directory.
+A simple declaration could look like this:
+
+declare module 'querystring' {
+  export function stringify(val: object): string
+  export function parse(val: string): object
+}
 
 
 
