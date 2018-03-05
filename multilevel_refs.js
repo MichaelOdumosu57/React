@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 
 
-
 function CustomTextInput(props) {
   return (
     <div>
@@ -13,10 +12,19 @@ function CustomTextInput(props) {
   );
 }
 
-class Parent extends React.Component {
+function Parent(props) {
+  return (
+    <div>
+      My input: <CustomTextInput inputRef={props.inputRef} />
+    </div>
+  );
+}
+
+
+class Grandparent extends React.Component {
   render() {
     return (
-      <CustomTextInput
+      <Parent
         inputRef={el => this.inputElement = el}
       />
     );
@@ -25,13 +33,7 @@ class Parent extends React.Component {
 
 
 
-
 ReactDOM.render(
-
-
-  <Parent/>,
-
-
-
+  <Grandparent/>,
   document.getElementById('root')
 );

@@ -3196,7 +3196,9 @@ https://flow.org/en/docs/getting-started/
 
 
 TypeScript
-TypeScript is a programming language developed by Microsoft. It is a typed superset of JavaScript, and includes its own compiler. Being a typed language, Typescript can catch errors and bugs at build time, long before your app goes live.
+TypeScript is a programming language developed by Microsoft.
+It is a typed superset of JavaScript, and includes its own compiler.
+Being a typed language, Typescript can catch errors and bugs at build time, long before your app goes live.
 
 
   Adding TypeScript to a Project
@@ -3267,6 +3269,68 @@ declare module 'querystring' {
   export function stringify(val: object): string
   export function parse(val: string): object
 }
+
+there are more static type queries in this section
+
+
+
+
+---------------------------Refs and the DOM--------------------
+ there are a few cases where you need to imperatively modify a child outside of the typical dataflow of using props
+ The child to be modified could be an instance of a React component, or it could be a DOM element.
+  For both of these cases, React provides an escape hatch.
+
+  When to Use Refs
+============================
+    Managing focus, text selection, or media playback.
+    Triggering imperative animations.
+    Integrating with third-party DOM libraries.
+    ================================
+
+    DOnt overuse them
+
+Adding a Ref to a DOM Element
+===============================
+file : basic_refs.js
+the ref attribute takes a callback executed after the component is
+React will call the ref callback with the DOM element when the component mounts, and call it with null when it unmounts
+it is called before componentDidMount or componentDidUpdate
+Using the ref callback just to set a property on the class is a common pattern for accessing DOM elements.
+
+
+
+Adding a Ref to a Class Component
+=====================================
+ref callback receives the mounted instance of the component as its argument.
+the component must be a class
+
+
+Refs and Functional Components
+==================================
+file: refs_and_functional_components.js
+cant use because they do not have instances, like a class instance they cannot be used as such
+u can use it inside a class as long as you refer to it
+so basically you use refs when this.state cannot give you access to the modifying tools you need
+
+
+Exposing DOM Refs to Parent Components
+============================================
+file : parent_to_child_refs.js
+if you want to use a ref in a child component this can be dangerous
+use as special prop that holds the refs functionality as a function
+so the ref is passed to the DOM node and know all dom elements
+this also goes several levels deep as you can foward the ref to the necessary descendant
+If you have absolutely no control over the child component implementation, your last option is to use findDOMNode(), but it is discouraged.
+https://reactjs.org/docs/react-dom.html#finddomnode
+
+Legacy API: String Refs
+try not to use them they are going to be deleted in the future
+
+Caveats
+--------------------------------
+If the ref callback is defined as an inline function, it will get called twice during updates,
+ with null and then again with the DOM element
+You can avoid this by defining the ref callback as a bound method on the class, 
 
 
 
