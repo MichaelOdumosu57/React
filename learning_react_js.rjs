@@ -19,7 +19,6 @@ setup https://www.youtube.com/watch?v=z-vLtsKvp_4
 
 
 latest js features, nice developer experience optimizes app production
-
 npm install -g create-react-app
 create-react-app my-app
 
@@ -30,6 +29,7 @@ no node modules or promises, just lying around in my computer, refer back here t
 create-react-app
 
 https://reactjs.org/docs/add-react-to-an-existing-app.html#installing-react
+
 
 
     npm init
@@ -134,7 +134,7 @@ to hard to install so I'll use the big external file instead
 
 
 
-<<<<<<< HEAD
+
 https://reactjs.org/docs/hello-world.html
 
                             ----------starting with react.js--------
@@ -3330,15 +3330,168 @@ Caveats
 --------------------------------
 If the ref callback is defined as an inline function, it will get called twice during updates,
  with null and then again with the DOM element
-You can avoid this by defining the ref callback as a bound method on the class, 
+You can avoid this by defining the ref callback as a bound method on the class,
+
+
+
+-------------------------------------------Uncontrolled Components----------------------------------------------
+file : refs_and _uncontrolled.js
+uncontrolled components, where form data is handled by the DOM itself.
+
+To write an uncontrolled component, instead of writing an event handler for every state update,
+you can use a ref to get form values from the DOM in other words THE DOM is doing what the state handlers do
+as you can see the source of truth is in the DOM
+
+in order for react to specify an inital value but leave subsequent values Uncontrolled use defaultValue instead of values
+
+checkboxes controlled defaultChecked respecively
+
+
+-------------------------------The file input Tag-----------------------------------------
+
+In HTML, an <input type="file"> lets the user choose one or more files from their device storage to be uploaded to a server or manipulated by JavaScript via the File API.
+
+in React it is always uncontrolled
+You should use the File API to interact with the files.
+
+file:access_file_through_refs.js
 
 
 
 
 
+---------------------------Optimizing Performance-------------------------------
+
+get to it when required
+
+--------------------------React Without ES6--------------------------------
+
+if you don’t use ES6 yet, you may use the create-react-class module instead:
+
+var createReactClass = require('create-react-class');
+var Greeting = createReactClass({
+  render: function() {
+    return <h1>Hello, {this.props.name}</h1>;
+  }
+});
+
+there are differences
+                Declaring Default Props
+
+ES6
 
 
-                -------build a stantic version in react-----------
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+class Greeting extends React.Component {
+  // ...
+}
+
+Greeting.defaultProps = {
+  name: 'Mary'
+};
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+createReactClass()
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+var Greeting = createReactClass({
+  getDefaultProps: function() {
+    return {
+      name: 'Mary'
+    };
+  },
+
+  // ...
+
+});
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+
+                Setting the Initial State
+
+in ES6 you use state in the constructor
+
+
+with createReactClass you do this
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+var Counter = createReactClass({
+  getInitialState: function() {
+    return {count: this.props.initialCount};
+  },
+  // ...
+});
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+                        Autobinding
+
+createReactclass autobinds all methods
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+var SayHello = createReactClass({
+  getInitialState: function() {
+    return {message: 'Hello!'};
+  },
+
+  handleClick: function() {
+    alert(this.state.message);
+  },
+
+  render: function() {
+    return (
+      <button onClick={this.handleClick}>
+        Say hello
+      </button>
+    );
+  }
+});
+>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+try not to use mixins
+
+
+
+                -------------React Without JSX--------------
+very helpful when you need to get creative, but that would drain my energy, let me get back to it later, even with raw js react might not like some of your inputs with their react objectS
+
+
+
+        --------------------------Reconciliation--------------------------------------
+
+    React makes changes but you dont know it basically uses a diffing algorithm to do this
+
+    When React starts it returns a tree, when u update something it returns a different tree
+    React needs to figure out how to replace tree a with tree b without taking it down
+
+    state of the art functions use O(n^3), where n is the number of objects
+
+    React uses O(n) based on 2 things
+    diffenet element type produce different tree
+    child elements cn be seen to be stable or not with their keys
+
+
+            -----------------------The Diffing Algorithm----------------------
+
+                    Elements Of Different Types
+
+    if React sees this it will take down the whole tree
+
+                    DOM Elements Of The Same Type
+
+    if React sees this it will only look to change any properties or attributes that have been replaced
+
+                    Component Elements Of The Same Type
+
+    if two components are the same type, it preserves the state only looking at the props of the DOM element to change
+
+                    Recursing On Children
+
+    if react sees something appended, it will mutate once it sees the difference, if it sees something prepended it will replace all the chil.dren, that why it needs a key, so it can know no matter the addition, certain items were here before, and other items are not because of their keys
+
+
 
   notes
   when not using lifecycle hooks, you can use the arrow function if you need anything called inside an ES6 cLASS

@@ -3,40 +3,41 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
 
-class FileInput extends React.Component {
+
+
+class NameForm extends React.Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  // highlight-range{4}
+
   handleSubmit(event) {
+    alert('A name was submitted: ' + this.input.value);
     event.preventDefault();
-    alert(
-      `Selected file - ${this.fileInput.files[0].name}`
-    );
   }
+
+
+
+
 
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
         <label>
-          Upload file:
-          {/* highlight-range{1-6} */}
-          <input
-            type="file"
-            ref={input => {
-              this.fileInput = input;
-            }}
-          />
+          Name:
+          <input type="text" ref={(input) => this.input = input} />
         </label>
-        <br />
-        <button type="submit">Submit</button>
+        <input type="submit" value="Submit" />
       </form>
     );
   }
 }
 
+
+
+
+
 ReactDOM.render(
-  <FileInput />,
+  <NameForm/>,
   document.getElementById('root')
 );
