@@ -6,9 +6,9 @@ module.exports = {
     entry:'./script.js',
 
     // entry:'./modells_search_engine.js',
-
+    // complied version of yr react code
     output:{
-        path: path.resolve(__dirname,''),
+        path: path.resolve(__dirname,' '),
         filename: 'transpiled.js'
     },
     module :{

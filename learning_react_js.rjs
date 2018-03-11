@@ -3492,6 +3492,115 @@ very helpful when you need to get creative, but that would drain my energy, let 
     if react sees something appended, it will mutate once it sees the difference, if it sees something prepended it will replace all the chil.dren, that why it needs a key, so it can know no matter the addition, certain items were here before, and other items are not because of their keys
 
 
+        ------------------------------Context------------------------------
+
+In some cases, you want to pass data through the component tree without having to pass the props down manually at every level. thats what context is for
+
+    its unstable rn, learn about it when react 16.3 comes out, its better if you use redux instead
+
+
+
+    ----------------------------------Fragments---------------------------------
+
+    Fragments let you group a list of children without adding extra nodes to the DOM.
+
+    render() {
+      return (
+        <React.Fragment>
+          <ChildA />
+          <ChildB />
+          <ChildC />
+        </React.Fragment>
+      );
+    }
+    
+    --------------------------Motivation-------------------------
+
+    if we are using the table tabs, and have a component inside of them , react says that it is illegal using <React.Fragment> fixes things
+
+        class Table extends React.Component {
+          render() {
+            return (
+              <table>
+                <tr>
+                  <Columns />
+                </tr>
+              </table>
+            );
+          }
+        }
+        
+        class Columns extends React.Component {
+          render() {
+            return (
+              <React.Fragment>
+                <td>Hello</td>
+                <td>World</td>
+              </React.Fragment>
+            );
+          }
+        }
+
+                Keyed Fragments
+
+when you have an array of react fragments they need keys, React.Fragments can only take keys as an attrivute
+
+        function Glossary(props) {
+          return (
+            <dl>
+              {props.items.map(item => (
+                // Without the `key`, React will fire a key warning
+                <React.Fragment key={item.id}>
+                  <dt>{item.term}</dt>
+                  <dd>{item.description}</dd>
+                </React.Fragment>
+              ))}
+            </dl>
+          );
+        }
+
+
+        -------------------------------Portals------------------------------
+        file: modal.html, modal.js
+
+it’s useful to insert a child into a different location in the DOM:
+
+ReactDOM.createPortal(child, container)
+
+render() {
+  // React does *not* create a new div. It renders the children into `domNode`.
+  // `domNode` is any valid DOM node, regardless of its location in the DOM.
+  return ReactDOM.createPortal(
+    this.props.children,
+    domNode,
+  );
+}
+
+            Event Bubbling Through Portals
+
+        -------------------------------------
+        file: global_modal_events.js
+if a child is found in a parent, and a parent has an event handler based on the elements in the child component
+the event handler can be attached to the root element of the parent, and will still respond.
+React components do not know their children but do know if they have the same event requirement, occuring in their children
+it will respond so try and find a way to avoid this
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   notes
   when not using lifecycle hooks, you can use the arrow function if you need anything called inside an ES6 cLASS
