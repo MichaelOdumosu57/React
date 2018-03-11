@@ -3589,10 +3589,111 @@ it will respond so try and find a way to avoid this
 
 
 
+            ---------------------------------Error Boundaries---------------------------------
+            file: error.js
+introduce i react v 16
+
+Error boundaries do not catch errors for:
+
+Event handlers (learn more)
+Asynchronous code (e.g. setTimeout or requestAnimationFrame callbacks)
+Server side rendering
+Errors thrown in the error boundary itself (rather than its children)
+
+
+A class component becomes an error boundary if it defines a new lifecycle method called componentDidCatch(error, info):
+
+Only class components can be error boundaries.
+
+
+then use it like this
+
+<ErrorBoundary>
+  <MyWidget />
+</ErrorBoundary>
+
+if you have an error within your custom error the error will propagate to the closest error boundary above it.
+
+
+        componentDidCatch Parameters
+
+        how to use
+        
+        componentDidCatch(error, info) {
+          
+          /* Example stack information:
+             in ComponentThatThrows (created by App)
+             in ErrorBoundary (created by App)
+             in div (created by App)
+             in App
+          */
+          logComponentStackToMyService(info.componentStack);
+        }
+
+you can place error boundaries anywhere depending you want to do
+
+
+        New Behavior for Uncaught Errors
+
+        in React 16, the compoment tree is unmounted, this avoids glitches in important software that ruins peoples lives
+
+        every component has its own error boundary, so one error will not shutdown the whole app
+
+Error Boundaries will catch your error because thats what the developers need, they can't have the app crashing
+
+
+
+            How About Event Handlers?
+        ------------------------------
+        file: event_handler_errors.js
+
+React doesn’t need error boundaries to recover from errors in event handlers.  So if they throw, React still knows what to display on the screen.
 
 
 
 
+                        ------------------CSS EMBED IN REACT -----------------------
+
+to do
+
+<details style={{ color: 'blue' }, { textAlign: 'center' }}>
+
+if a css style attribute has a '-' use camel calse, for single and multiple attribute changes uses above example
+
+
+
+
+
+                --------------------------Web Components--------------------------
+
+Web Components provide strong encapsulation for reusable components, while React provides a declarative library that keeps the DOM in sync with your data. The two goals are complementary
+
+ if you are using third-party UI components that are written using Web Components. you may want to mix
+
+
+
+
+            ------------------------Using Web Components in React--------------------------
+
+    Web Components use “class” instead of “className”.
+    
+      return (
+    <brick-flipbox class="demo">
+      <div>front</div>
+      <div>back</div>
+    </brick-flipbox>
+  );
+
+
+        Web Components often expose an imperative API.
+        Events emitted by a Web Component may not properly propagate through a React render tree.
+
+
+
+
+            ------------------Using React in your Web Components--------------------------
+
+        refer to the booklet
 
 
 
