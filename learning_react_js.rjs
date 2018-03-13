@@ -3884,7 +3884,619 @@ import MyComponent, { someFunction } from './MyComponent.js';
         need your refs to become part of the HOC wrapper
 
 
+    
+        ---------------------------Render Props-------------------------------
+
+
+        A component with a render prop takes a function that returns a React element and calls it instead of implementing its own render logic.
+
+
+        ================Use Render Props for Cross-Cutting Concerns========
+        file: render_prop_behavior.js
+        file: render_prop.js
+        how can we use a components purpose in another component
+        such as the behavior described in the respective file
+        look at the files and understand how the render prop takes the functionality out of one component and places it in another
+
+        if you need a HOC with another render prop you can do it like this
+        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        function withMouse(Component) {
+          return class extends React.Component {
+            render() {
+              return (
+                <Mouse render={mouse => (
+                  <Component {...this.props} mouse={mouse} />
+                )}/>
+              );
+            }
+          }
+        }
+        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+        a render prop is a function prop that a component uses to know what to render
+
+
+                ============Using Props Other Than render================
+
+any prop that is a function that a component uses to know what to render is technically a “render prop”.
+do not need to call a render prop "render"
+
+    could also be written like this
+
+
+    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    <Mouse>
+      {mouse => (
+        <p>The mouse position is {mouse.x}, {mouse.y}</p>
+      )}
+    </Mouse>
+
+        Mouse.propTypes = {
+          children: PropTypes.func.isRequired
+        };
+    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+
+            =============Caveats===============
+
+            ;;;;;;;;;;;;;;Be careful when using Render Props with React.PureComponent;;;;;;;;
+
+        cant do because you redefine the method every time
+
+        To get around this problem, you can sometimes define the prop as an instance method, like so:
+
+        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+              constructor(props) {
+                super(props);
+            
+                // This binding ensures that `this.renderTheCat` always refers
+                // to the *same* function when we use it in render.
+                this.renderTheCat = this.renderTheCat.bind(this);
+              }
+            
+              renderTheCat(mouse) {
+                return <Cat mouse={mouse} />;
+              }
+
+
+              render() {
+                return (
+                  <div>
+                    <h1>Move the mouse around!</h1>
+                    <Mouse render={this.renderTheCat} />
+                  </div>
+                );
+              }
+        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    
+        only do this on basic coding
+
+
+
+
+
+           -----------------------------------------------Higher-Order Components-----------------------------------------------
+
+    an advanced React technique, a form of logic never-seen-before
+
+    a higher-order component is a function that takes a component and returns a new component.
+
+
+    HOCs are common in third-party React libraries, such as Redux’s connect and Relay’s createFragmentContainer.
+
+
+
+            =================Use HOCs For Cross-Cutting Concerns====================
+
+
+    happens when two or more components use the same object over and over, we rather have a single object source that predefines
+    everything needed in the life cycle hook
+
+
+
+    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        // This function takes a component...
+        function withSubscription(WrappedComponent, selectData) {
+          // ...and returns another component...
+          return class extends React.Component {
+            constructor(props) {
+              super(props);
+              this.handleChange = this.handleChange.bind(this);
+              this.state = {
+                data: selectData(DataSource, props)
+              };
+            }
+        
+            componentDidMount() {
+              // ... that takes care of the subscription...
+              DataSource.addChangeListener(this.handleChange);
+            }
+        
+            componentWillUnmount() {
+              DataSource.removeChangeListener(this.handleChange);
+            }
+        
+            handleChange() {
+              this.setState({
+                data: selectData(DataSource, this.props)
+              });
+            }
+        
+            render() {
+              // ... and renders the wrapped component with the fresh data!
+              // Notice that we pass through any additional props
+              return <WrappedComponent data={this.state.data} {...this.props} />;
+            }
+          };
+        }
+        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+ HOC doesn’t modify the input component, nor does it use inheritance to copy its behavior.
+Rather, a HOC composes the original component by wrapping it in a container component.
+A HOC is a pure function with zero side-effects.
+
+the relation between the funcion and the HOC is proped-based can swtich HOC . you use functions with HOC, becuase they are supposed to replace
+the original component not to be added as it child
+
+Resist the temptation to modify a component’s prototype (or otherwise mutate it) inside a HOC. furthermore site visitors need to understand what is occuring
+
+HOC should be based on composition as you can see
+
+
+ Container components are part of a strategy of separating responsibility between high-level and low-level concerns and HOC are based off that concept
+
+
+
+            ============Convention: Pass Unrelated Props Through to the Wrapped Component=============
+
+if the HOC does not need props from the input component it should not waste time with it
+
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+render() {
+  // Filter out extra props that are specific to this HOC and shouldn't be
+  // passed through
+  const { extraProp, ...passThroughProps } = this.props;
+
+  // Inject props into the wrapped component. These are usually state values or
+  // instance methods.
+  const injectedProp = someStateOrInstanceMethod;
+
+  // Pass props to wrapped component
+  return (
+    <WrappedComponent
+      injectedProp={injectedProp}
+      {...passThroughProps}
+    />
+  );
+}
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+
+
+            ============Convention: Maximizing Composability====================
+
+Not all HOCs look the same. Sometimes they accept only a single argument, the wrapped component: but they can have more
+
+go back to this when you're HOC need more parameters
+
+
+
+        ===================Convention: Wrap the Display Name for Easy Debugging===================
+
+to see which component entered a HOC follow this
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+function withSubscription(WrappedComponent) {
+  class WithSubscription extends React.Component {/* ... */}
+  WithSubscription.displayName = `WithSubscription(${getDisplayName(WrappedComponent)})`;
+  return WithSubscription;
+}
+
+function getDisplayName(WrappedComponent) {
+  return WrappedComponent.displayName || WrappedComponent.name || 'Component';
+}
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+
+
+
+
+                =======Caveats=======
+
+Don’t Use HOCs Inside the render Method,because of react diffing algorithm will ummount the component, and the state and its
+children are lost
+
+
+
+        ///////////////Static Methods Must Be Copied Over//////////
+
+to do it
+
+
+// Define a static method
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+WrappedComponent.staticMethod = function() {/*...*/}
+
+function enhance(WrappedComponent) {
+  class Enhance extends React.Component {/*...*/}
+  // Must know exactly which method(s) to copy :(
+  Enhance.staticMethod = WrappedComponent.staticMethod;
+  return Enhance;
+}
+
+const EnhancedComponent = enhance(WrappedComponent);
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+ use hoist-non-react-statics to automatically copy all non-React static methods:
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+import hoistNonReactStatic from 'hoist-non-react-statics';
+function enhance(WrappedComponent) {
+  class Enhance extends React.Component {/*...*/}
+  hoistNonReactStatic(Enhance, WrappedComponent);
+  return Enhance;
+}
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+// ...export the method separately...
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+export { someFunction };
+
+// ...and in the consuming module, import both
+import MyComponent, { someFunction } from './MyComponent.js';
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+
+            ==============Refs Aren’t Passed Through==============
+
+        try not to use refs with HOC becuase refs are handled by the DOM, and when a ref with a component gets
+        sent to a HOC, the ref reacts based on the HOC, modal but it will do the wrong thing,but use this if you
+        need your refs to become part of the HOC wrapper
+
+
+    --------------------------------Integrating with Other Libraries---------------------
+
+        ==================Integrating with DOM Manipulation Plugins=================
+
+        React only watches how itself affects the dom, if something else changes the DOM. React cannot recover, so easy way: only use React for Rendering capabilitis, hard way lets find out
+
+
+        ;;;;;;;;;;;;;;;;;How to Approach the Problem;;;;;;;;;;;;;;
+        you can return an element which react has no reason to update
+
+        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        class SomePlugin extends React.Component {
+          componentDidMount() {
+            this.$el = $(this.el);
+            this.$el.somePlugin();
+          }
+        
+          componentWillUnmount() {
+            this.$el.somePlugin('destroy');
+          }
+        
+          render() {
+            return <div ref={el => this.el = el} />;
+          }
+        }
+        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+
+
+            ;;;;;;;;;;;;;;;Integrating with jQuery Chosen Plugin;;;;;;;;;;;;;;;
+
+        sample merge
+
+        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        class Chosen extends React.Component {
+          componentDidMount() {
+            this.$el = $(this.el);
+            this.$el.chosen();
+        
+            this.handleChange = this.handleChange.bind(this);
+            this.$el.on('change', this.handleChange);
+          }
+          
+          componentDidUpdate(prevProps) {
+            if (prevProps.children !== this.props.children) {
+              this.$el.trigger("chosen:updated");
+            }
+          }
+        
+          componentWillUnmount() {
+            this.$el.off('change', this.handleChange);
+            this.$el.chosen('destroy');
+          }
+          
+          handleChange(e) {
+            this.props.onChange(e.target.value);
+          }
+        
+          render() {
+            return (
+              <div>
+                <select className="Chosen-select" ref={el => this.el = el}>
+                  {this.props.children}
+                </select>
+              </div>
+            );
+          }
+        }
+        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        rmbr to get file
+
+
+                ;;;;;;;;;;;;;;;;;;;;;Integrating with Other View Libraries;;;;;;;;;;;;;;;;;;;;;
+
+    React can be written piece by piece and combined it with our existing server-generated templates and other client-side code.
+
+
+
+        ;;;;;;;;;;;;;;;;Replacing String-Based Rendering with React;;;;;;;;;;;;;;;;
+
+        to do this
+        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        function Button() {
+          return <button id="btn">Say Hello</button>;
+        }
+        
+        ReactDOM.render(
+          <Button />,
+          document.getElementById('container'),
+          function() {
+            $('#btn').click(function() {
+              alert('Hello!');
+            });
+          }
+        );
+        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        pay special attention to the react compoent
+
+
+        string rendereing at its basic level
+        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+            function Button(props) {
+              return <button onClick={props.onClick}>Say Hello</button>;
+            }
+            
+            function HelloButton() {
+              function handleClick() {
+                alert('Hello!');
+              }
+              return <Button onClick={handleClick} />;
+            }
+            
+            ReactDOM.render(
+              <HelloButton />,
+              document.getElementById('container')
+            );
+        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+
+        ;;;;;;;;;;;;;;;;;;;Embedding React in a Backbone View;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+        since I do know know it just know that it is there, its basically forcoonecting the serve to the browser
+
+
+            ;;;;;;;;;Integrating with Model Layers;;;;;;;;;;
+
+        says here to receive data from server you can also, used backbon
+
+
+
+
+                -   --------------Accessibility--------------
+
+        Web accessibility (also referred to as a11y) makes sure that blind and deaf people can also use your site
+
+        WCAG
+        The Web Content Accessibility Guidelines provides guidelines for creating accessible web sites.
+
+        The Web Accessibility Initiative - Accessible Rich Internet Applications document contains techniques for building fully accessible JavaScript widgets.
+
+        if a prop has aria then it should remain lowercase
+
+
+        -   ;;;;;;;;;;;;;;;;;;;;;;Semantics;;;;;;;;;;;;;;;;
+
+        Semantic HTML is the foundation of accessibility in a web application.
+
+
+                ;;;;;;;;;;;;Accessible Forms;;;;;;;;;;;;
+
+
+                #############Labeling################
+        
+        you need labels so that accessiblity can work
+
+        https://www.w3.org/WAI/tutorials/forms/labels/
+        http://webaim.org/techniques/forms/controls
+        https://www.paciellogroup.com/blog/2017/04/what-is-an-accessible-name/
+
+        Although these standard HTML practices can be directly used in React, note that the for attribute is written as htmlFor in JSX:
+
+
+
+            #########Notifying the user of errors#########
+
+        https://www.w3.org/WAI/tutorials/forms/notifications/
+        http://webaim.org/techniques/formvalidation/
+
+
+                #######Focus Control###########
+    
+        so web app can be only used with keyboard
+
+        http://webaim.org/techniques/keyboard/
+
+
+                ############Mechanisms to skip to desired content############
+
+        http://webaim.org/techniques/skipnav/
+        http://www.scottohara.me/blog/2018/03/03/landmarks.html
+
+
+
+                    ##########Programmatically managing focus###########
+
+        if you wanna build widgets
+        keyboard-navigable JavaScript widgets.
+
+
+
+                ############More Complex Widgets############
+
+
+        go to those links
+        WAI-ARIA Authoring Practices - Design Patterns and Widgets
+        Heydon Pickering - ARIA Examples
+        Inclusive Components
+
+
+            ;;;;;;;;;;;;;Other Points for Consideration;;;;;;;;;;;;;;
+
+        
+            http://webaim.org/techniques/screenreader/#language
+            https://www.w3.org/TR/UNDERSTANDING-WCAG20/navigation-mechanisms-title.html
+            https://github.com/gaearon/react-document-title
+            
+
+            "https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html"
+            "https://www.smashingmagazine.com/2014/10/color-contrast-tips-and-tools-for-accessibility/"
+            "http://a11yproject.com/posts/what-is-color-contrast/"
+            http://jxnblk.com/colorable/
+            http://webaim.org/resources/contrastchecker/
+            https://www.paciellogroup.com/resources/contrastanalyser/
+
+
+            ;;;;;;;;;;;;;;;;;;Development and Testing Tools;;;;;;;;;;;;;;;;;;;;
+
+
+                #############The keyboard##############
+
+            look at later
+
+
+                ###############Development assistance################
+                https://github.com/evcohen/eslint-plugin-jsx-a11y
+                https://github.com/facebookincubator/create-react-app
+
+
+
+                --------------------Code-Splitting------------------------------
+
+
+                    ;;;;;;;;;;;;;;;;;;;;Bundling;;;;;;;;;;;;;;;;;;;;;
+            
+            Bundling is the process of following imported files and merging them into a single file: a “bundle”. This bundle can then be included on a webpage to load an entire app at once.
+
+
+                ;;;;;;;;;;;;;;;;;Code Splitting;;;;;;;;;;;;;
+
+
+            to avoid large bundle, use code splitting making multiple bundles that
+            can be run dynamically
+
+            help "lazy-load", avoid using code never used in app
+
+
+                ;;;;;;;;;;;;;;;;;;;;import();;;;;;;;;;;;;;;;;;;;
+
+            
+        before
+        /////////////////////////////////////
+        import { add } from './math';
+        
+        console.log(add(16, 26));
+        /////////////////////////////////////
+
+        after
+        /////////////////////////////////////
+        import("./math").then(math => {
+          console.log(math.add(16, 26));
+        });
+        /////////////////////////////////////
+
+        If you’re setting up Webpack yourself, you’ll probably want to read Webpack’s guide on code splitting. Your Webpack config should look vaguely like this.
+        
+        When using Babel, you’ll need to make sure that Babel can parse the dynamic import syntax but is not transforming it. For that you will need babel-plugin-syntax-dynamic-import.
+
+
+
+                    ;;;;;;;;;;;;;;;;;;;;;Libraries;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+                    #############React Loadable###########
+
+
+        introducing code splitting into your app at a given component.
+
+        before
+        /////////////////////////////////////
+        import OtherComponent from './OtherComponent';
+        
+        const MyComponent = () => (
+          <OtherComponent/>
+        );
+        /////////////////////////////////////
+
+        after
+        /////////////////////////////////////
+        import Loadable from 'react-loadable';
+        
+        const LoadableOtherComponent = Loadable({
+          loader: () => import('./OtherComponent'),
+          loading: () => <div>Loading...</div>,
+        });
+        
+        const MyComponent = () => (
+          <LoadableOtherComponent/>
+        );
+        /////////////////////////////////////
+
+
+                        #################Route-based code splitting###############
+
+        You want to make sure you choose places that will split bundles evenly, but won’t disrupt the user experience.
+
+
+        //////////////////////////////////////////////////////////////////////////
+        import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+        import Loadable from 'react-loadable';
+        
+        const Loading = () => <div>Loading...</div>;
+        
+        const Home = Loadable({
+          loader: () => import('./routes/Home'),
+          loading: Loading,
+        });
+        
+        const About = Loadable({
+          loader: () => import('./routes/About'),
+          loading: Loading,
+        });
+        
+        const App = () => (
+          <Router>
+            <Switch>
+              <Route exact path="/" component={Home}/>
+              <Route path="/about" component={About}/>
+            </Switch>
+          </Router>
+        );
+        //////////////////////////////////////////////////////////////////////////
+        
   notes
   when not using lifecycle hooks, you can use the arrow function if you need anything called inside an ES6 cLASS
   adjacent jsx must be wrapped in closing tags
+    to comment in react use the js embed brackets
 >>>>>>> projects

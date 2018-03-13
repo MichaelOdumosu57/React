@@ -2,33 +2,38 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 
-class MyComponent extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { error: null };
-    this.handleClick = this.handleClick.bind(this)
+ class Chosen extends React.Component {
+  componentDidMount() {
+    this.$el = $(this.el);
+    this.$el.chosen();
   }
   
-  handleClick () {
-    try {
-      // Do something that could throw
-      hg
-    } catch (error) {
-      this.setState({ error:true });
-    }
+  componentWillUnmount() {
+    this.$el.chosen('destroy');
   }
-
+  
   render() {
-    if (this.state.error) {
-      return (<h1>Caught an error.</h1>)
-    }
-    return ( <div onClick={this.handleClick}>Click Me</div>)
+    return (
+      <div>
+        <select className="Chosen-select" ref={el => this.el = el}>
+          {this.props.children}
+        </select>
+      </div>
+    );
   }
 }
 
-
+function Example() {
+  return (
+    <Chosen>
+      <option>vanilla</option>
+      <option>chocolate</option>
+      <option>strawberry</option>
+    </Chosen>
+  );
+}
 
 ReactDOM.render(
-  <MyComponent/>,
+  <Example />,
   document.getElementById('root')
 );
